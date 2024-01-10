@@ -14,12 +14,12 @@ const ContactList = (props:Props) => {
 				<td>{contact.lastname}</td>
 				<td>{contact.email}</td>
 				<td>{contact.phone}</td>
-				<td><button onClick={() => props.removeContact(contact._id)}>Remove</button></td>
+				<td><button className="btn btn-danger" onClick={() => props.removeContact(contact._id)}>Remove</button></td>
 			</tr>
 		)
 	}) 
 	return (
-		<table>
+		<table className="table table-striped">
 			<thead>
 				<tr>
 					<th>First Name</th>

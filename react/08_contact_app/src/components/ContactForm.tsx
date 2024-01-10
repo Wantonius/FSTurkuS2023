@@ -43,37 +43,43 @@ const ContactForm = (props:Props) => {
 	}
 	
 	return (
-		<form onSubmit={onSubmit}>
-			<label htmlFor="firstname">First Name</label>
+	<div style={{"width":"40%","backgroundColor":"lightblue","margin":"auto","textAlign":"center"}}>
+		<form onSubmit={onSubmit} className="m-3">
+			<label htmlFor="firstname" className="form-label">First Name</label>
 			<input type="text"
 					name="firstname"
 					id="firstname"
+					className="form-control"
 					onChange={onChange}
 					value={state.firstname}/>
 			<br/>
-			<label htmlFor="lastname">Last Name</label>
+			<label htmlFor="lastname" className="form-label">Last Name</label>
 			<input type="text"
 					name="lastname"
 					id="lastname"
+					className="form-control"
 					onChange={onChange}
 					value={state.lastname}/>
 			<br/>
-			<label htmlFor="email">Email</label>
+			<label htmlFor="email" className="form-label">Email</label>
 			<input type="email"
 					name="email"
 					id="email"
+					className="form-control"
 					onChange={onChange}
 					value={state.email}/>
 			<br/>
-			<label htmlFor="phone">Phone</label>
+			<label htmlFor="phone" className="form-label">Phone</label>
 			<input type="tel"
 					name="phone"
 					id="phone"
+					className="form-control"
 					onChange={onChange}
 					value={state.phone}/>
 			<br/>
-			<input type="submit" value="Add"/>
+			<input type="submit" value="Add" className="btn btn-primary"/>
 		</form>
+	</div>
 	)
 }
 

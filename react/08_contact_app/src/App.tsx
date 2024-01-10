@@ -43,6 +43,7 @@ function App() {
 						})
 						return;
 					case "addcontact":
+					case "removecontact":
 						getList();
 						return;
 					default:
@@ -56,6 +57,10 @@ function App() {
 		fetchData();
 		
 	},[urlRequest])
+	
+	useEffect(() => {
+		getList();
+	},[])
 	
 	const getList = () => {
 		setUrlRequest({
@@ -80,7 +85,12 @@ function App() {
 	}
 	
 	const removeContact = (id:string) => {
-		
+		setUrlRequest({
+			request:new Request("/api/contact/"+id,{
+				method:"DELETE"
+			}),
+			action:"removecontact"
+		})
 	}
 	
 	return (
