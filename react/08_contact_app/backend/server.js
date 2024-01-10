@@ -46,7 +46,7 @@ app.post("/api/contact",function(req,res) {
 		"email":req.body.email,
 		"phone":req.body.phone
 	})
-	model.save().then(function(contact) {
+	contact.save().then(function(contact) {
 		return res.status(201).json(contact)
 	}).catch(function(err) {
 		console.log("Database returned an error.",err);

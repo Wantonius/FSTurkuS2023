@@ -1,35 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState,useEffect } from 'react'
+import Contact from './models/Contact';
+import ContactForm from './components/ContactForm';
+import ContactList from './components/ContactList';
+
+interface State {
+	list:Contact[];
+}
+
+interface UrlRequest {
+	request:Request;
+	action:string;
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	
+	const [state,setState] = useState<State>({
+		list:[]
+	})
+	
+	const [urlRequest,setUrlRequest] = useState<UrlRequest>({
+		request:new Request("",{}),
+		action:""
+	})
+	
+	//Fetch useEffect
+	
+	useEffect(() => {
+		
+		const fetchData = async () => {
+			const response = await fetch(urlRequest.request);
+			if(!response) {
+				console.log("No response!");
+				return;
+			}
+			if(response.ok) {
+				switch(urlRequest.action) {
+					case "getlist":
+						let temp = await response.json();
+						let list = temp as Contact[];
+						setState({
+							list:list
+						})
+						return;
+					case "addcontact":
+						getList();
+						return;
+					default:
+						return;
+				}
+			} else {
+				console.log("Server responded with a status "+response.status+" "+response.statusText);
+			}
+		}
+		
+		fetchData();
+		
+	},[urlRequest])
+	
+	const getList = () => {
+		setUrlRequest({
+			request:new Request("/api/contact",{
+				method:"GET"
+			}),
+			action:"getlist"
+		})
+	}
+	
+	const addContact = (contact:Contact) => {
+		setUrlRequest({
+			request:new Request("/api/contact",{
+				method:"POST",
+				headers:{
+					"Content-Type":"application/json"
+				},
+				body:JSON.stringify(contact)
+			}),
+			action:"addcontact"
+		})
+	}
+	
+	const removeContact = (id:string) => {
+		
+	}
+	
+	return (
+		<>
+			<ContactForm addContact={addContact}/>
+			<ContactList list={state.list} removeContact={removeContact}/>
+		</>
+	)
 }
 
 export default App
