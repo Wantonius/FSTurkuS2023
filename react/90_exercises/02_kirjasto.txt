@@ -1,0 +1,7 @@
+Kirjasto
+
+Tehdään kirjasto. Kirjasto toimii backendissä REST APIN takana, jossa kirjoja voi lainata, palauttaa, lisätä ja poistaa.
+Lainattua kirjaa ei voi uudelleenlainata ennenkuin se palautetaan. Book-objekti sisältää ainakin kirjan
+nimen, genren, kirjailijan nimen ja sivumäärän. Frontissa kirjoja voi lainata, palauttaa, lisätä ja poistaa. 
+
+Bonus: Lisää kirjoja listaavaan tableen filtteröinti ominaisuus (puhtaasti frontissa) genren mukaan. Array.prototype.filter toimii tähän.
