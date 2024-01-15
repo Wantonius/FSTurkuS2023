@@ -42,7 +42,7 @@ const ShoppingForm = (props:Props) => {
 		})
 	}
 	return(
-		<div style={{"width":40%,"backgroundColor":"lightblue","margin":"auto","textAlign":"center"}}>
+		<div style={{"width":"40%","backgroundColor":"lightblue","margin":"auto","textAlign":"center"}}>
 			<form className="m-3" onSubmit={onSubmit}>
 				<label className="form-label" htmlFor="type">Type</label>
 				<input type="text"
