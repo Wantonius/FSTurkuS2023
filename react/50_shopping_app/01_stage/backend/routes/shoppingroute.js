@@ -32,7 +32,7 @@ router.post("/shopping",function(req,res) {
 	})
 })
 
-router.delete("/api/shopping/:id",function(req,res) {
+router.delete("/shopping/:id",function(req,res) {
 	itemModel.deleteOne({"_id":req.params.id}).then(function(stats) {
 		console.log(stats);
 		return res.status(200).json({"Message":"Success"})
