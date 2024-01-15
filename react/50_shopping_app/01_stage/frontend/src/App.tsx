@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import useAction from './hooks/useAction';
 import ShoppingForm from './components/ShoppingForm';
 import ShoppingList from './components/ShoppingList';
@@ -5,6 +6,10 @@ import ShoppingList from './components/ShoppingList';
 function App() {
 
 	const action = useAction();
+	
+	useEffect(() =>  {
+		action.getList();
+	},[])
 
 	return (
 		<>
