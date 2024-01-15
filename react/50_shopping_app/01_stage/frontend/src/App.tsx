@@ -1,11 +1,15 @@
+import useAction from './hooks/useAction';
+import ShoppingForm from './components/ShoppingForm';
+
 function App() {
 
+	const action = useAction();
 
-  return (
-    <>
-
-    </>
-  )
+	return (
+		<>
+			<ShoppingForm add={action.add}/>
+		</>
+	)
 }
 
 export default App
