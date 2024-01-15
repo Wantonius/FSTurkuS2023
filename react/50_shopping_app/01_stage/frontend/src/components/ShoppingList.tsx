@@ -1,5 +1,8 @@
 import {useState} from 'react';
 import ShoppingItem from '../models/ShoppingItem';
+import Row from './Row';
+import RemoveRow from './RemoveRow';
+import EditRow from './EditRow';
 
 interface Props {
 	list:ShoppingItem[];
@@ -51,9 +54,18 @@ const ShoppingList = (props:Props) => {
 	}
 	
 	const shoppingItems = props.list.map((item,index) => {
+		if(state.removeIndex === index) {
+			return(
+				<RemoveRow key={item._id} item={item} changeMode={changeMode} removeItem={removeItem}/>
+			)
+		}
+		if(state.editIndex === index) {
+			return(
+				<EditRow key={item._id} item={item} changeMode={changeMode} editItem={editItem}/>
+			)
+		}		
 		return(
-			<>
-			</>
+			<Row key={item._id} item={item} index={index} changeMode={changeMode}/>
 		)
 	})
 	
