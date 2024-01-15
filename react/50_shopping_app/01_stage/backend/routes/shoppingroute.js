@@ -62,6 +62,5 @@ router.put("/shopping/:id",function(req,res) {
 		return res.status(500).json({"Message":"Internal server error"});
 	})
 })
-})
 
 module.exports = router;
