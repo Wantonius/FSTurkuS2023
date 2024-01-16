@@ -19,7 +19,8 @@ const useAction = () => {
 		isLogged:false,
 		token:"",
 		loading:false,
-		error:""
+		error:"",
+		user:""
 	})
 	
 	const [urlRequest,setUrlRequest] = useState<UrlRequest>({
@@ -56,6 +57,17 @@ const useAction = () => {
 			let tempState = {
 				...state,
 				error:error
+			}
+			saveToStorage(tempState);
+			return tempState;
+		})
+	}
+	
+	const setUser = (user:string) => {
+		setState((state) => {
+			let tempState = {
+				...state,
+				user:user
 			}
 			saveToStorage(tempState);
 			return tempState;
@@ -114,7 +126,8 @@ const useAction = () => {
 							token:"",
 							error:"",
 							isLogged:false,
-							loading:false
+							loading:false,
+							user:""
 						}
 						saveToStorage(tempState);
 						setState(tempState);
@@ -130,7 +143,8 @@ const useAction = () => {
 						token:"",
 						isLogged:false,
 						loading:false,
-						error:"Your session has expired. Logging you out"
+						error:"Your session has expired. Logging you out",
+						user:""
 					}
 					saveToStorage(tempState);
 					setState(tempState);
@@ -157,7 +171,8 @@ const useAction = () => {
 							isLogged:false,
 							loading:false,
 							token:"",
-							error:"Server responded with an error. Logging you out."
+							error:"Server responded with an error. Logging you out.",
+							user:""
 						}
 						saveToStorage(tempState);
 						setState(tempState);
@@ -234,6 +249,7 @@ const useAction = () => {
 	}
 	
 	const login = (user:User) => {
+		setUser(user.username);
 		setUrlRequest({
 			request:new Request("/login",{
 				method:"POST",

@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 interface Props {
 	logout():void;
 	isLogged:boolean;
+	user:string;
 }
 
 const Navbar = (props:Props) => {
@@ -16,6 +17,9 @@ const Navbar = (props:Props) => {
 					</li>
 					<li className="nav-item" style={{marginLeft:10}}>
 						<Link to="/form" className="nav-link">Add new item</Link>
+					</li>
+					<li className="nav-item" style={{marginLeft:10}}>
+						<p style={{backgroundColor:"blue"}}>Logged in as {props.user}</p>
 					</li>
 					<li className="nav-item" style={{marginLeft:10}}>
 						<Link to="/" onClick={props.logout} className="nav-link">Logout</Link>
