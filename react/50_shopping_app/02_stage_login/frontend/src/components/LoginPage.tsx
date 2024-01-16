@@ -49,7 +49,7 @@ const LoginPage = (props:Props) => {
 	}
 	
 	return(
-		<div style={{"width":"40%","backgroundColor":"lightgreen","margin":"auto":"textAlign":"center"}}>
+		<div style={{"width":"40%","backgroundColor":"lightgreen","margin":"auto","textAlign":"center"}}>
 			<form className="m-3">
 				<label className="form-label" htmlFor="username">Username</label>
 				<input type="text"

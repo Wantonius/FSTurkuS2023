@@ -10,15 +10,15 @@ function App() {
 
 	const action = useAction();
 	
-	let messageArea = <h4 style={{"height":100}></h4>
+	let messageArea = <h4 style={{"height":100}}></h4>
 	
 	if(action.state.loading) {
-		messageArea = <h4 style={{"height":100}>Loading ...</h4>
+		messageArea = <h4 style={{"height":100}}>Loading ...</h4>
 	}
 	if(action.state.error) {
-		messageArea = <h4 style={{"height":100}>{action.state.error}</h4>
+		messageArea = <h4 style={{"height":100}}>{action.state.error}</h4>
 	}
-	if(action.state.isLogged)
+	if(action.state.isLogged) {
 	return (
 		<>
 			<Navbar logout={action.logout} isLogged={action.state.isLogged}/>
@@ -29,7 +29,8 @@ function App() {
 				<Route path="*" element={<Navigate to="/"/>}/>
 			</Routes>
 		</>
-	) else {
+	) 
+	}else {
 		return(
 		<>
 			<Navbar logout={action.logout} isLogged={action.state.isLogged}/>
