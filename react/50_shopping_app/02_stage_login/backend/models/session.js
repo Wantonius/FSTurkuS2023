@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 
 let Schema = mongoose.Schema({
 	user:{type:String,index:true},
-	type:String,
-	count:Number,
-	price:Number
+	ttl:Number,
+	token:String
 })
 
-module.exports = mongoose.model("Item",Schema);
+module.exports = mongoose.model("Session",Schema);
