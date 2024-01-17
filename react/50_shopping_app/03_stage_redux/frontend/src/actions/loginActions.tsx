@@ -44,7 +44,7 @@ const handleLogin = async (request:Request,act:string,dispatch:ThunkDispatch<any
 					dispatch(registerFailed("Username already in use"));
 					return;
 				}
-				dispatch(registerFailed("Register failed. "+errorMessage);
+				dispatch(registerFailed("Register failed. "+errorMessage));
 				return;
 			default:
 				return;
