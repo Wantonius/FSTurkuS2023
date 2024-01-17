@@ -5,7 +5,7 @@ import {BrowserRouter} from 'react-router-dom';
 import loginReducer from './reducers/loginReducer';
 import shoppingReducer from './reducers/shoppingReducer';
 import {createStore,Store,AnyAction,applyMiddleware,combineReducers} from 'redux';
-import thunk from 'redux-thunk';
+import {thunk} from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {AppState} from './types/states';
 
