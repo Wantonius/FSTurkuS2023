@@ -3,12 +3,12 @@ export default class ShoppingItem {
 	type:string = "";
 	count:number = 0;
 	price:number = 0;
-	_id:string = "";
+	id:number = 0;
 	
-	constructor(type:string,count:number,price:number,_id:string) {
+	constructor(type:string,count:number,price:number,id:number) {
 		this.type = type;
 		this.count = count;
 		this.price = price;
-		this._id = _id;
+		this.id = id;
 	}
 }
