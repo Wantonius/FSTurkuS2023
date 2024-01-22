@@ -24,7 +24,7 @@ export const add = createAsyncThunk("add", async (item:ShoppingItem, thunkAPI) =
 		body:JSON.stringify(item)
 	})
 	const response = await fetch(request);
-	if(!response.ok) {
+	if(response.ok) {
 		thunkAPI.dispatch(getList())
 	}
 	return {"Message":"Success"}
@@ -35,7 +35,7 @@ export const remove = createAsyncThunk("remove",async (id:number,thunkAPI) => {
 		method:"DELETE"
 	})
 	const response = await fetch(request);
-	if(!response.ok) {
+	if(response.ok) {
 		thunkAPI.dispatch(getList())
 	}
 	return {"Message":"Success"}	
@@ -50,7 +50,7 @@ export const edit = createAsyncThunk("edit", async (item:ShoppingItem, thunkAPI)
 		body:JSON.stringify(item)
 	})
 	const response = await fetch(request);
-	if(!response.ok) {
+	if(response.ok) {
 		thunkAPI.dispatch(getList())
 	}
 	return {"Message":"Success"}

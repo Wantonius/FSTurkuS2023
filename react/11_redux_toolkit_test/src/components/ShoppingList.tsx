@@ -59,16 +59,16 @@ const ShoppingList = (props) => {
 	const shoppingItems = list.map((item,index) => {
 		if(state.removeIndex === index) {
 			return(
-				<RemoveRow key={item._id} item={item} changeMode={changeMode} removeItem={removeItem}/>
+				<RemoveRow key={item.id} item={item} changeMode={changeMode} removeItem={removeItem}/>
 			)
 		}
 		if(state.editIndex === index) {
 			return(
-				<EditRow key={item._id} item={item} changeMode={changeMode} editItem={editItem}/>
+				<EditRow key={item.id} item={item} changeMode={changeMode} editItem={editItem}/>
 			)
 		}		
 		return(
-			<Row key={item._id} item={item} index={index} changeMode={changeMode}/>
+			<Row key={item.id} item={item} index={index} changeMode={changeMode}/>
 		)
 	})
 	
