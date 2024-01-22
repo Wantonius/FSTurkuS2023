@@ -52,9 +52,11 @@ const handleLogin = async (request:Request,act:string,dispatch:ThunkDispatch<any
 				}
 				let data = temp as Token;
 				setState((state) => {
-					...state,
-					token:data.token,
-					isLogged:true
+					return   {
+						...state,
+						token:data.token,
+						isLogged:true
+					}
 				})
 				//TODO: dispatch getList
 				return;
