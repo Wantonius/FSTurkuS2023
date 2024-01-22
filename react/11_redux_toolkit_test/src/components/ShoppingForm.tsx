@@ -1,9 +1,9 @@
 import React,{useState} from 'react';
 import ShoppingItem from '../models/ShoppingItem';
-
-interface Props {
-	add(item:ShoppingItem):void;
-}
+import {useDispatch} from 'react-redux';
+import {ThunkDispatch} from '@reduxjs/toolkit';
+import {AnyAction} from 'redux';
+import {add} from '../store/shoppingSlice';
 
 interface State {
 	type:string;
@@ -11,13 +11,15 @@ interface State {
 	price:number;
 }
 
-const ShoppingForm = (props:Props) => {
+const ShoppingForm = (props) => {
 	
 	const [state,setState] = useState<State>({
 		type:"",
 		count:0,
 		price:0
 	})
+	
+	const dispatch:ThunkDispatch<any,any,AnyAction> = useDispatch()
 	
 	const onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
 		setState((state) => {
@@ -33,8 +35,8 @@ const ShoppingForm = (props:Props) => {
 		if(state.type === "") {
 			return;
 		}
-		let item = new ShoppingItem(state.type,state.count,state.price,"");
-		props.add(item);
+		let item = new ShoppingItem(state.type,state.count,state.price,0);
+		dispatch(add(item));
 		setState({
 			type:"",
 			count:0,

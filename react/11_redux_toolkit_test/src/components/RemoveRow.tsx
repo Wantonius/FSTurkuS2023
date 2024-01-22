@@ -2,7 +2,7 @@ import ShoppingItem from '../models/ShoppingItem';
 
 interface Props {
 	item:ShoppingItem;
-	removeItem(id:string):void;
+	removeItem(id:number):void;
 	changeMode(index:number,mode:string):void;
 }
 
@@ -17,7 +17,7 @@ const RemoveRow = (props:Props) => {
 					onClick={() => props.changeMode(0,"cancel")}
 					>Cancel</button></td>
 			<td><button className="btn btn-danger"
-					onClick={() => props.removeItem(props.item._id)}
+					onClick={() => props.removeItem(props.item.id)}
 					>Confirm</button></td>
 		</tr>
 	)
