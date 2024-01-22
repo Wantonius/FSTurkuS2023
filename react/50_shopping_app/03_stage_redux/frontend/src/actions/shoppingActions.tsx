@@ -93,7 +93,27 @@ const handleFetch = async (request:Request,act:string,dispatch:ThunkDispatch<any
 				return;
 		}
 	} else {
-		
+		if(response.status === 403) {
+			dispatch(logoutFailed("Your session has expired. Logging you out."));
+			return;
+		}
+		let errorMessage:string = "Server responded with a status "+response.status+" "+response.statusText
+		switch(act) {
+			case "getlist":
+				dispatch(fetchListFailed("Failed to fetch shopping information. "+errorMessage));
+				return;
+			case "add":
+				dispatch(fetchItemFailed(actionConstants.ADD_ITEM_FAILED,"Failed to add new item. "+errorMessage));
+				return;
+			case "remove":
+				dispatch(fetchItemFailed(actionConstants.REMOVE_ITEM_FAILED,"Failed to remove item. "+errorMessage));
+				return;
+			case "edit":
+				dispatch(fetchItemFailed(actionConstants.EDIT_ITEM_FAILED,"Failed to edit item. "+errorMessage));
+				return;
+			default:
+				return;				
+		}
 	}
 }
 
