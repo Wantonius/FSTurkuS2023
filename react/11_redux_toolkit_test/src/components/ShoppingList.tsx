@@ -6,7 +6,7 @@ import EditRow from './EditRow';
 import {useDispatch,useSelector} from 'react-redux';
 import {ThunkDispatch} from '@reduxjs/toolkit';
 import {AnyAction} from 'redux';
-import {remove,edit} from './store/shoppingSlice';
+import {remove,edit} from '../store/shoppingSlice';
 
 
 interface State {
