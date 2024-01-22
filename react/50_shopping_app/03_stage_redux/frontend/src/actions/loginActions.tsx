@@ -20,6 +20,17 @@ export const register = (user:User) => {
 	}
 }
 
+export const login = (user:User) => {
+	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
+		let request = new Request("/login",{
+			method:"POST",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify(user)
+		})
+		handleLogin(request,"login",dispatch);
+	}
+}
+
 const handleLogin = async (request:Request,act:string,dispatch:ThunkDispatch<any,any,AnyAction>) => {
 	dispatch(loading());
 	const response = await fetch(request);
@@ -33,7 +44,21 @@ const handleLogin = async (request:Request,act:string,dispatch:ThunkDispatch<any
 			case "register":
 				dispatch(registerSuccess());
 				return;
-			default:
+			case "login":
+				let temp = await response.json();
+				if(!temp) {
+					dispatch(loginFailed("Failed to parse login information. Try again later."));
+					return;
+				}
+				let data = temp as Token;
+				setState((state) => {
+					...state,
+					token:data.token,
+					isLogged:true
+				})
+				//TODO: dispatch getList
+				return;
+			default:	
 				return;
 		}
 	} else {
@@ -45,6 +70,9 @@ const handleLogin = async (request:Request,act:string,dispatch:ThunkDispatch<any
 					return;
 				}
 				dispatch(registerFailed("Register failed. "+errorMessage));
+				return;
+			case "login":
+				dispatch(loginFailed("Login failed. "+errorMessage));
 				return;
 			default:
 				return;
