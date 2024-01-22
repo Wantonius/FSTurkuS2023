@@ -31,7 +31,7 @@ function App() {
 		messageArea = <h4 style={{"height":50,"textAlign":"center"}}>Loading ...</h4>
 	}
 	if(state.error) {
-		messageArea = <h4 style={{"height":50,"textAlign":"center"}}>{action.state.error}</h4>
+		messageArea = <h4 style={{"height":50,"textAlign":"center"}}>{state.error}</h4>
 	}
 	if(state.isLogged) {
 	return (
