@@ -2,6 +2,7 @@ import * as actionConstants from '../types/actionConstants';
 import User from '../models/User';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
+import {getList} from './shoppingActions';
 
 interface Token {
 	token:string;
@@ -64,7 +65,7 @@ const handleLogin = async (request:Request,act:string,dispatch:ThunkDispatch<any
 				}
 				let data = temp as Token;
 				dispatch(loginSuccess(data.token));
-				//TODO: dispatch getList
+				dispatch(getList(data.token));
 				return;
 			case "logout":
 				dispatch(logoutSuccess());
