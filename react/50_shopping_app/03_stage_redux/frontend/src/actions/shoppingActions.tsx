@@ -46,7 +46,7 @@ export const remove = (token:string,id:string) => {
 
 export const edit = (token:string,item:ShoppingItem) => {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
-		let request = new Request("/api/shopping/"+item.id,{
+		let request = new Request("/api/shopping/"+item._id,{
 			method:"PUT",
 			headers:{
 				"Content-Type":"application/json",
