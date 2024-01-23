@@ -1,7 +1,10 @@
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useContext} from 'react';
 import {AppState} from '../types/states';
+import useAppState from './useAppState';
+import ActionContext from '../context/ActionContext';
 import ShoppingItem from '../models/ShoppingItem';
 import User from '../models/User';
+import * as actionConstants from '../types/actionConstants';
 
 interface UrlRequest {
 	request:Request;
@@ -14,74 +17,33 @@ interface Token {
 
 const useAction = () => {
 	
-	const [state,setState] = useState<AppState>({
-		list:[],
-		isLogged:false,
-		token:"",
-		loading:false,
-		error:"",
-		user:""
-	})
 	
 	const [urlRequest,setUrlRequest] = useState<UrlRequest>({
 		request:new Request("",{}),
 		action:""
 	})
 	
-	//STATE HELPERS
+	const {dispatch} = useContext(ActionContext);
 	
-	const saveToStorage = (state:AppState) => {
-		sessionStorage.setItem("state",JSON.stringify(state));
-	}
-	
-	useEffect(() => {
-		let temp = sessionStorage.getItem("state");
-		if(temp) {
-			let state:AppState = JSON.parse(temp);
-			setState(state);
-		}
-	},[])
-	
-	const setLoading = (loading:boolean) => {
-		setState((state) => {
-			return {
-				...state,
-				loading:loading,
-				error:""
-			}
-		})
-	}
-	
-	const setError = (error:string) => {
-		setState((state) => {
-			let tempState = {
-				...state,
-				error:error
-			}
-			saveToStorage(tempState);
-			return tempState;
-		})
-	}
-	
-	const setUser = (user:string) => {
-		setState((state) => {
-			let tempState = {
-				...state,
-				user:user
-			}
-			saveToStorage(tempState);
-			return tempState;
-		})
-	}
+	const {token} = useAppState();
 	
 	useEffect(() => {
 		
 		const fetchData = async () => {
-			setLoading(true);
+			dispatch({
+				type:actionConstants.LOADING,
+				payload:""
+			})
 			const response = await fetch(urlRequest.request);
-			setLoading(false);
+			dispatch({
+				type:actionConstants.STOP_LOADING,
+				payload:""
+			})
 			if(!response){
-				console.log("Server sent no response!");
+				dispatch({
+					type:actionConstants.LOGOUT_FAILED,
+					payload:"Server never responded. Logging you out!"
+				})
 				return;
 			}
 			if(response.ok) {
@@ -89,48 +51,52 @@ const useAction = () => {
 					case "getlist":
 						let temp = await response.json();
 						let list:ShoppingItem[] = temp as ShoppingItem[];
-						setState((state) => {
-							let tempState = {
-								...state,
-								list:list
-							}
-							saveToStorage(tempState);
-							return tempState;
+						dispatch({
+							type:actionConstants.FETCH_LIST_SUCCESS,
+							payload:list
 						})
 						return;
 					case "additem":
+						dispatch({
+							type:actionConstants.ADD_ITEM_SUCCESS,
+							payload:""
+						})
+						getList(token);
+						return;
 					case "removeitem":
+						dispatch({
+							type:actionConstants.REMOVE_ITEM_SUCCESS,
+							payload:""
+						})
+						getList(token);
+						return;
 					case "edititem":
-						getList(state.token);
+						dispatch({
+							type:actionConstants.EDIT_ITEM_SUCCESS,
+							payload:""
+						})
+						getList(token);
 						return;
 					case "register":
-						setError("Register success");
+						dispatch({
+							type:actionConstants.REGISTER_SUCCESS,
+							payload:""
+						})
 						return;
 					case "login":
 						let token = await response.json();
 						let data = token as Token;
-						setState((state) => {
-							let tempState = {
-								...state,
-								isLogged:true,
-								token:data.token
-							}
-							saveToStorage(tempState);
-							return tempState;
+						dispatch({
+							type:actionConstants.LOGIN_SUCCESS,
+							payload:data.token
 						})
 						getList(data.token);
 						return;
 					case "logout":
-						let tempState = {
-							list:[],
-							token:"",
-							error:"",
-							isLogged:false,
-							loading:false,
-							user:""
-						}
-						saveToStorage(tempState);
-						setState(tempState);
+						dispatch({
+							type:actionConstants.LOGOUT_SUCCESS,
+							payload:""
+						})
 						return;
 					default:
 						return;
