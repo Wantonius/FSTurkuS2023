@@ -27,6 +27,13 @@ const useAction = () => {
 	
 	const {token} = useAppState();
 	
+	const setError = (error:string) => {
+		dispatch({
+			type:actionConstants.REGISTER_FAILED,
+			payload:error
+		})
+	}
+	
 	useEffect(() => {
 		
 		const fetchData = async () => {

@@ -5,27 +5,30 @@ import ShoppingList from './components/ShoppingList';
 import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import {Routes,Route,Navigate} from 'react-router-dom';
+import useAppState from './hooks/useAppState';
 
 function App() {
 
 	const action = useAction();
 	
+	const {loading,error,isLogged} = useAppState();
+	
 	let messageArea = <h4 style={{"height":50,"textAlign":"center"}}></h4>
 	
-	if(action.state.loading) {
+	if(loading) {
 		messageArea = <h4 style={{"height":50,"textAlign":"center"}}>Loading ...</h4>
 	}
-	if(action.state.error) {
-		messageArea = <h4 style={{"height":50,"textAlign":"center"}}>{action.state.error}</h4>
+	if(error) {
+		messageArea = <h4 style={{"height":50,"textAlign":"center"}}>{error}</h4>
 	}
-	if(action.state.isLogged) {
+	if(isLogged) {
 	return (
 		<>
-			<Navbar logout={action.logout} isLogged={action.state.isLogged} user={action.state.user}/>
+			<Navbar />
 				{messageArea}
 			<Routes>
-				<Route path="/" element={<ShoppingList list={action.state.list} remove={action.remove} edit={action.edit}/>}/>
-				<Route path="/form" element={<ShoppingForm add={action.add}/>}/>
+				<Route path="/" element={<ShoppingList />}/>
+				<Route path="/form" element={<ShoppingForm />}/>
 				<Route path="*" element={<Navigate to="/"/>}/>
 			</Routes>
 		</>
@@ -33,10 +36,10 @@ function App() {
 	}else {
 		return(
 		<>
-			<Navbar logout={action.logout} isLogged={action.state.isLogged} user={action.state.user}/>
+			<Navbar log/>
 				{messageArea}
 			<Routes>
-				<Route path="/" element={<LoginPage register={action.register} login={action.login} setError={action.setError}/>}/>
+				<Route path="/" element={<LoginPage />}/>
 				<Route path="*" element={<Navigate to="/"/>}/>
 			</Routes>
 		</>	

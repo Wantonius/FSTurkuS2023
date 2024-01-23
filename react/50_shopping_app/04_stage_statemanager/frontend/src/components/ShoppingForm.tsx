@@ -1,9 +1,7 @@
 import React,{useState} from 'react';
 import ShoppingItem from '../models/ShoppingItem';
+import useAction from '../hooks/useAction';
 
-interface Props {
-	add(item:ShoppingItem):void;
-}
 
 interface State {
 	type:string;
@@ -11,13 +9,15 @@ interface State {
 	price:number;
 }
 
-const ShoppingForm = (props:Props) => {
+const ShoppingForm = (props) => {
 	
 	const [state,setState] = useState<State>({
 		type:"",
 		count:0,
 		price:0
 	})
+	
+	const {add} = useAction();
 	
 	const onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
 		setState((state) => {
@@ -34,7 +34,7 @@ const ShoppingForm = (props:Props) => {
 			return;
 		}
 		let item = new ShoppingItem(state.type,state.count,state.price,"");
-		props.add(item);
+		add(item);
 		setState({
 			type:"",
 			count:0,

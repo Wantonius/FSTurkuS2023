@@ -1,18 +1,15 @@
 import React,{useState} from 'react';
 import User from '../models/User';
-
-interface Props {
-	register(user:User):void;
-	login(user:User):void;
-	setError(error:string):void;
-}
+import useAction from '../hooks/useAction';
 
 interface State {
 	username:string;
 	password:string;
 }
 
-const LoginPage = (props:Props) => {
+const LoginPage = (props) => {
+	
+	const {register,login,setError} = useAction();
 	
 	const [state,setState] = useState<State>({
 		username:"",
@@ -31,21 +28,21 @@ const LoginPage = (props:Props) => {
 	const onRegister = (event:React.SyntheticEvent) => {
 		event.preventDefault();
 		if(state.username.length < 4 || state.password.length < 8) {
-			props.setError("Username must be atleast 4 and password 8 characters long");
+			setError("Username must be atleast 4 and password 8 characters long");
 			return;
 		}
 		let user = new User(state.username,state.password);
-		props.register(user);
+		register(user);
 	}
 	
 	const onLogin = (event:React.SyntheticEvent) => {
 		event.preventDefault();
 		if(state.username.length < 4 || state.password.length < 8) {
-			props.setError("Username must be atleast 4 and password 8 characters long");
+			setError("Username must be atleast 4 and password 8 characters long");
 			return;
 		}
 		let user = new User(state.username,state.password);
-		props.login(user);
+		login(user);
 	}
 	
 	return(
