@@ -104,16 +104,10 @@ const useAction = () => {
 				}
 			} else {
 				if(response.status === 403) {
-					let tempState = {
-						list:[],
-						token:"",
-						isLogged:false,
-						loading:false,
-						error:"Your session has expired. Logging you out",
-						user:""
-					}
-					saveToStorage(tempState);
-					setState(tempState);
+					dispatch({
+							type:actionConstants.LOGOUT_FAILED,
+							payload:"Your session has expired. Logging you out."
+						})
 					return;
 				}
 				let errorMessage = "Server responded with a status "+response.status+" "+response.statusText;
@@ -122,26 +116,46 @@ const useAction = () => {
 						if(response.status === 409) {
 							errorMessage = "Username already in use"
 						}
-						setError(errorMessage);
+						dispatch({
+							type:actionConstants.REGISTER_FAILED,
+							payload:errorMessage
+						})
 						return;
 					case "login":
+						dispatch({
+							type:actionConstants.LOGIN_FAILED,
+							payload:errorMessage
+						})
+						return;
 					case "getlist":
+						dispatch({
+							type:actionConstants.FETCH_LIST_FAILED,
+							payload:errorMessage
+						})
+						return;
 					case "additem":
+						dispatch({
+							type:actionConstants.ADD_ITEM_FAILED,
+							payload:errorMessage
+						})
+						return;
 					case "removeitem":
+						dispatch({
+							type:actionConstants.REMOVE_ITEM_FAILED,
+							payload:errorMessage
+						})
+						return;
 					case "edititem":
-						setError(errorMessage);
+						dispatch({
+							type:actionConstants.EDIT_ITEM_FAILED,
+							payload:errorMessage
+						})
 						return;
 					case "logout":
-						let tempState = {
-							list:[],
-							isLogged:false,
-							loading:false,
-							token:"",
-							error:"Server responded with an error. Logging you out.",
-							user:""
-						}
-						saveToStorage(tempState);
-						setState(tempState);
+						dispatch({
+							type:actionConstants.LOGOUT_FAILED,
+							payload:"Server responded with an error. Logging you out."
+						})
 						return;
 					default:
 						return;
