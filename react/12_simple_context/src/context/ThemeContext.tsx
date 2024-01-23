@@ -16,7 +16,7 @@ export const themes = {
 	}
 }
 
-const ThemeContext =  React.createContext(themes.dark)
+const ThemeContext =  React.createContext<ThemeType>(themes.dark)
 
 ThemeContext.displayName = "ThemeContext";
 
