@@ -42,7 +42,7 @@ function App() {
 	}else {
 		return(
 		<>
-			<Navbar log/>
+			<Navbar />
 				{messageArea}
 			<Routes>
 				<Route path="/" element={<LoginPage />}/>

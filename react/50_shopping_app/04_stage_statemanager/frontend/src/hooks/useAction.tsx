@@ -1,5 +1,4 @@
 import {useState,useEffect,useContext} from 'react';
-import {AppState} from '../types/states';
 import useAppState from './useAppState';
 import ActionContext from '../context/ActionContext';
 import ShoppingItem from '../models/ShoppingItem';
@@ -91,8 +90,8 @@ const useAction = () => {
 						})
 						return;
 					case "login":
-						let token = await response.json();
-						let data = token as Token;
+						let temp2 = await response.json();
+						let data = temp2 as Token;
 						dispatch({
 							type:actionConstants.LOGIN_SUCCESS,
 							payload:data.token

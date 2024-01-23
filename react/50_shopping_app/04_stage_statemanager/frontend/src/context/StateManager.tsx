@@ -1,7 +1,7 @@
 import React,{useReducer} from 'react';
 import ActionContext from './ActionContext';
 import AppStateContext from './AppStateContext';
-import {AppState} from './types/states';
+import {AppState} from '../types/states';
 import ShoppingItem from '../models/ShoppingItem';
 import * as actionConstants from '../types/actionConstants';
 import Action from '../types/Action';

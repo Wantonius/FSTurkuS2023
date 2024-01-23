@@ -9,7 +9,7 @@ interface State {
 	price:number;
 }
 
-const ShoppingForm = (props) => {
+const ShoppingForm = () => {
 	
 	const [state,setState] = useState<State>({
 		type:"",

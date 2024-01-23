@@ -7,7 +7,7 @@ interface State {
 	password:string;
 }
 
-const LoginPage = (props) => {
+const LoginPage = () => {
 	
 	const {register,login,setError} = useAction();
 	

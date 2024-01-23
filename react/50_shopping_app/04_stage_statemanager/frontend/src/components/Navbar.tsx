@@ -3,7 +3,7 @@ import useAction from '../hooks/useAction';
 import useAppState from '../hooks/useAppState';
 
 
-const Navbar = (props) => {
+const Navbar = () => {
 	
 	const {isLogged,user} = useAppState();
 	const {logout} = useAction();

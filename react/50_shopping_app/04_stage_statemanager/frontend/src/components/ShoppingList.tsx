@@ -12,7 +12,7 @@ interface State {
 	editIndex:number;
 }
 
-const ShoppingList = (props) => {
+const ShoppingList = () => {
 	
 	const [state,setState] = useState<State>({
 		removeIndex:-1,
