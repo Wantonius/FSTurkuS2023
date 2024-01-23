@@ -111,7 +111,7 @@ const listReducer = (state:AppState,action:Action) => {
 		case actionConstants.EDIT_ITEM_FAILED:
 			tempState = {
 				...state,
-				error:action.payload as error
+				error:action.payload as string
 			}
 			saveToStorage(tempState);
 			return tempState;
@@ -120,3 +120,18 @@ const listReducer = (state:AppState,action:Action) => {
 	}
 	
 }
+
+const StateManager = (props:Props) => {
+	
+	const [state,dispatch] = useReducer(listReducer,initialState);
+	
+	return (
+		<AppStateContext.Provider value={state}>
+			<ActionContext.Provider value={{dispatch:dispatch}}>
+				{props.children}
+			</ActionContext.Provider>
+		</AppStateContext.Provider>
+	)
+}
+
+export default StateManager;
