@@ -9,9 +9,15 @@ import useAppState from './hooks/useAppState';
 
 function App() {
 
-	const action = useAction();
+	const {getList} = useAction();
 	
-	const {loading,error,isLogged} = useAppState();
+	const {loading,error,isLogged,token} = useAppState();
+	
+	useEffect(() => {
+		if(isLogged) {
+			getList(token);
+		}
+	},[isLogged])
 	
 	let messageArea = <h4 style={{"height":50,"textAlign":"center"}}></h4>
 	

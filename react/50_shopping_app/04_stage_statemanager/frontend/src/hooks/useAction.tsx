@@ -97,7 +97,6 @@ const useAction = () => {
 							type:actionConstants.LOGIN_SUCCESS,
 							payload:data.token
 						})
-						getList(data.token);
 						return;
 					case "logout":
 						dispatch({
