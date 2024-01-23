@@ -183,7 +183,7 @@ const useAction = () => {
 				method:"POST",
 				headers:{
 					"Content-Type":"application/json",
-					"token":state.token
+					"token":token
 				},
 				body:JSON.stringify(item)
 			}),
@@ -196,7 +196,7 @@ const useAction = () => {
 			request:new Request("/api/shopping/"+id,{
 				method:"DELETE",
 				headers:{
-					"token":state.token
+					"token":token
 				}
 			}),
 			action:"removeitem"
@@ -209,7 +209,7 @@ const useAction = () => {
 				method:"PUT",
 				headers:{
 					"Content-Type":"application/json",
-					"token":state.token
+					"token":token
 				},
 				body:JSON.stringify(item)
 			}),
@@ -229,7 +229,10 @@ const useAction = () => {
 	}
 	
 	const login = (user:User) => {
-		setUser(user.username);
+		dispatch({
+			type:actionConstants.SET_USER,
+			payload:user.username
+		})
 		setUrlRequest({
 			request:new Request("/login",{
 				method:"POST",
@@ -245,12 +248,12 @@ const useAction = () => {
 			request:new Request("/logout",{
 				method:"POST",
 				headers:{"Content-Type":"application/json",
-							"token":state.token}
+							"token":token}
 			}),
 			action:"logout"
 		})
 	}
-	return {state,getList,add,remove,edit,register,login,logout,setError}
+	return {getList,add,remove,edit,register,login,logout,setError}
 }
 
 export default useAction;
