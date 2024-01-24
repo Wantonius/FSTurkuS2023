@@ -11,13 +11,13 @@ function App() {
 
 	const computeWordLength = (word) => {
 		let i=0;
-		while(i<100000000) {
+		while(i<1000000000) {
 			i++;
 		}
 		return word.length;
 	}
-	let wordLength = computeWordLength(word);
-	
+	//let wordLength = computeWordLength(word);
+	let wordLength = useMemo(() => computeWordLength(word),[word]);
 	return (
 		<>
 			<div style={{"margin":"auto","textAlign":"center"}}>
