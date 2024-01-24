@@ -72,7 +72,7 @@ passport.use("local-login",new localStrategy({
 			let token = createToken();
 			let now = Date.now();
 			req.session.token = token;
-			req.session.user = user.username;
+			req.session.user = user.username;	
 			return done(null,user);
 		})
 	}).catch(function(err) {
@@ -83,12 +83,16 @@ passport.use("local-login",new localStrategy({
 
 passport.serializeUser(function(user,done) {
 	console.log("serializeUser");
-	done(null,user._id);
+	let temp = {
+		username:user.username,
+		_id:user._id
+	}
+	done(null,temp);
 })
 
-passport.deserializeUser(function(_id,done) {
+passport.deserializeUser(function(user,done) {
 	console.log("deserializeUser");
-	userModel.findById(_id).then(function(user) {
+	userModel.findById(user._id).then(function(user) {
 		done(null,user)
 	}).catch(function(err) {
 		done(err);
