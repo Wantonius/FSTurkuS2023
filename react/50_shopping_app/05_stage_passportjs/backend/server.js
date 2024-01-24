@@ -58,10 +58,7 @@ passport.use("local-login",new localStrategy({
 	if(req.body.username < 4 || req.body.password < 8) {
 		return done(null,false);
 	}
-	userModel.findOne({"username":req.body.username}).then(function(err,user) {
-		if(err) {
-			return done(err);
-		}
+	userModel.findOne({"username":req.body.username}).then(function(user) {
 		if(!user) {
 			return done(null,false);
 		}
