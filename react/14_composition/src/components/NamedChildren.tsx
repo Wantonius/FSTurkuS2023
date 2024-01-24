@@ -19,7 +19,7 @@ const NamedChildren = (props:Props) => {
 	return(
 		<div style={cardStyle}>
 			<>{props.header}</>
-			{props.media ? <>props.media</>:<></>}
+			{props.media ? <>{props.media}</>:<></>}
 			<>{props.content}</>
 		</div>
 	)
