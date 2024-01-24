@@ -88,11 +88,10 @@ passport.serializeUser(function(user,done) {
 
 passport.deserializeUser(function(_id,done) {
 	console.log("deserializeUser");
-	userModel.findById(_id,function(err,user) {
-		if(err) {
-			return done(err)
-		}
-		return done(null,user);
+	userModel.findById(_id).then(function(user) {
+		done(null,user)
+	}).catch(function(err) {
+		done(err);
 	})
 })
 
