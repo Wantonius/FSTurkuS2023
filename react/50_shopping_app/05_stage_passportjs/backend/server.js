@@ -5,6 +5,10 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const userModel = require("./models/user");
 const sessionModel = require("./models/session");
+const passport = require("passport");
+const localStrategy = require("passport-local").Strategy;
+const session = require("express-session");
+const mongoStore = require("connect-mongo");
 
 let app = express();
 
@@ -20,6 +24,80 @@ mongoose.connect(url).then(
 	() => console.log("Connected to MongoDB"),
 	(err) => console.log("Failed to connect to MongoDB. Reason",err)
 )
+
+//SESSION MANAGEMENT
+
+app.use(session({
+	name:"shopping-session",
+	resave:false,
+	secret:"NotNormallyInCode",
+	saveUninitialized:false,
+	cookie:{maxAge:1000*60*60},
+	store:mongoStore.create({
+		mongoUrl:url,
+		collectionName:"sessions"
+	})
+}))
+
+//PASSPORT
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use("local-login",new localStrategy({
+	usernameField:"username",
+	passwordField:"password",
+	passReqToCallback:true
+},function(req,username,password,done) {
+	if(!req.body) {
+		return done(null,false);
+	}
+	if(!req.body.username || !req.body.password) {
+		return done(null,false);
+	}
+	if(req.body.username < 4 || req.body.password < 8) {
+		return done(null,false);
+	}
+	userModel.findOne({"username":req.body.username}).then(function(err,user) {
+		if(err) {
+			return done(err);
+		}
+		if(!user) {
+			return done(null,false);
+		}
+		bcrypt.compare(req.body.password,user.password,function(err,success) {
+			if(err) {
+				return done(err);
+			}
+			if(!success) {
+				return done(null,false);
+			}
+			let token = createToken();
+			let now = Date.now();
+			req.session.token = token;
+			req.session.user = user.username;
+			return done(null,user);
+		})
+	}).catch(function(err) {
+		console.log(err);
+		return done(err);
+	})	
+}))
+
+passport.serializeUser(function(user,done) {
+	console.log("serializeUser");
+	done(null,user._id);
+})
+
+passport.deserializeUser(function(_id,done) {
+	console.log("deserializeUser");
+	userModel.findById(_id,function(err,user) {
+		if(err) {
+			return done(err)
+		}
+		return done(null,user);
+	})
+})
 
 //MIDDLEWARES
 
@@ -97,45 +175,7 @@ app.post("/register",function(req,res) {
 })
 
 app.post("/login",function(req,res) {
-	if(!req.body) {
-		return res.status(400).json({"Message":"Bad request"})
-	}
-	if(!req.body.username || !req.body.password) {
-		return res.status(400).json({"Message":"Bad request"})
-	}
-	if(req.body.username < 4 || req.body.password < 8) {
-		return res.status(400).json({"Message":"Bad request"})
-	}
-	userModel.findOne({"username":req.body.username}).then(function(user) {
-		if(!user) {
-			return res.status(401).json({"Message":"Unauthorized"})
-		}
-		bcrypt.compare(req.body.password,user.password,function(err,success) {
-			if(err) {
-				console.log(err);
-				return res.status(500).json({"Message":"Internal Server Error"})
-			}
-			if(!success) {
-				return res.status(401).json({"Message":"Unauthorized"})
-			}
-			let token = createToken();
-			let now = Date.now();
-			let session = new sessionModel({
-				"user":req.body.username,
-				"ttl":now+time_to_live_diff,
-				"token":token
-			})
-			session.save().then(function(session) {
-				return res.status(200).json({"token":token})
-			}).catch(function(err) {
-				console.log(err);
-				return res.status(500).json({"Message":"Internal Server Error"})
-			})
-		})
-	}).catch(function(err) {
-		console.log(err);
-		return res.status(500).json({"Message":"Internal Server Error"})
-	})
+
 })
 
 app.post("/logout",function(req,res) {
