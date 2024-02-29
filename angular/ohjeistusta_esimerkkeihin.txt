@@ -1,0 +1,37 @@
+Angular:
+
+Your first Angular app
+https://angular.io/tutorial/first-app/first-app-lesson-01
+
+Esimerkit;
+b-directives:
+ngIf:
+https://blog.angular-university.io/angular-ngif/
+
+ngFor:
+https://blog.angular-university.io/angular-2-ngfor/
+
+c-property binding:
+https://angular.io/guide/property-binding
+
+d-inputs and outputs:
+https://angular.io/guide/inputs-outputs
+
+e ja f formit:
+https://angular.io/guide/forms-overview
+
+g-services ja dependency injection:
+https://angular.io/guide/architecture-services
+
+h-observables:
+https://angular.io/guide/observables
+
+k ja j routing:
+https://angular.io/guide/routing-overview
+
+k-animations:
+https://angular.io/guide/animations
+
+Lopuksi tehdään shopping appin versio. Siinä tarvitaan sitten Angularin http-clienttiä.
+https://angular.io/guide/understanding-communicating-with-http
+
