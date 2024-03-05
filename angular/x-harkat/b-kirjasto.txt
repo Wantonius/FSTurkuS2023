@@ -1,0 +1,7 @@
+Kirjasto
+
+Tehdään kirjasto. Kirjasto toimii servicenä, jossa kirjoja voi lainata, palauttaa, lisätä ja poistaa.
+Lainattua kirjaa ei voi uudelleenlainata ennenkuin se palautetaan. Book-luokka sisältää ainakin kirjan
+nimen, genren, kirjailijan nimen ja sivumäärän. Kirjastossa on kolme komponenttia, joista yhdessä
+voi lainata ja palauttaa kirjoja ja toisessa lisätä ja kolmannessa poistaa. Lisäksi lainaus/palautus-sivulla
+voi filtteröidä kirjoja genren mukaan. Mukana toki myös routtaus.
